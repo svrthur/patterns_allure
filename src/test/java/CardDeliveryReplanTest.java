@@ -40,14 +40,14 @@ public class CardDeliveryReplanTest {
         $("[name = 'phone']").setValue(validUser.getPhone());
         $("[data-test-id= 'agreement']").click();
         $(byText("Запланировать")).click();
-        $("[data-test-id=success-notification").shouldBe(Condition.visible, Duration.ofSeconds(15))
+        $("[data-test-id=success-notification]").shouldBe(Condition.visible, Duration.ofSeconds(15))
                 .shouldHave(text("Встреча успешно запланирована на " + firstMeetingDate));
         $("[data-test-id=date] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
         $("[data-test-id=date] input").setValue(secondMeetingDate);
         $(byText("Запланировать")).click();
         $("[data-test-id='replan-notification'] .notification__content")
-                .shouldHave(exactText("У вас уже запланирована встреча на другую дату. Перепланировать?"))
-                .shouldBe(visible);
+                .shouldBe(visible, Duration.ofSeconds(5))
+                .shouldHave(text("У вас уже запланирована встреча на другую дату. Перепланировать?"));
         $("[data-test-id='replan-notification'] button").click();
         $("[data-test-id='success-notification'] .notification__content")
                 .shouldHave(exactText("Встреча успешно запланирована на " + secondMeetingDate))
